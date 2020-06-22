@@ -27,7 +27,7 @@ delete_old_versions() {
     return 0;
   fi
 
-  limit=$(("${#ids[@]}" - max_service_versions))
+  limit=$((${#ids[@]} - max_service_versions))
 
   echo "Deleting $limit old versions"
   for version in "${ids[@]::limit}"
