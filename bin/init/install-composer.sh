@@ -38,7 +38,7 @@ clearComposerSHA() {
 # Returns:
 #   1 when the validation pass 
 #   0 when the sha validation fail
-#s
+#
 #############################################
 isValidComposerSHA() {
   SHA256_SUM=$(cat ./bin/composer.sha256sum)
