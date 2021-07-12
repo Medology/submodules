@@ -47,10 +47,10 @@ isValidComposerSHA() {
   PARSED_SHA256_SUM="${SHA256_SUM/ composer.phar/}"
   VALIDATION_RESULT=$(echo "$PARSED_SHA256_SUM ./bin/composer" | sha256sum -c) || TRUE
   if [ "$VALIDATION_RESULT" == "./bin/composer: OK" ]; then
-    echo 1
-  else
-    echo 0
+    return
   fi
+
+  false
 }
 
 #############################################
@@ -72,7 +72,7 @@ checkExistingInstallation() {
         awk '{print $3}' \
     )
 
-    if [ "$(isValidComposerSHA)" ]; then
+    if isValidComposerSHA; then
         # Version is as expected. We're done.
         echo "Composer ${EXPECTED_VERSION} already installed."
         clearComposerSHA
@@ -108,7 +108,7 @@ downloadComposerBinary() {
 #############################################
 validateDownloadedComposer() {
   echo -n "Checking the SHA for the downloaded file..."
-  if [ "$(isValidComposerSHA)" ]; then
+  if isValidComposerSHA; then
       clearComposerSHA
       echo "passed"
   else
